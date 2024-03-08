@@ -1,0 +1,201 @@
+#include "msobject.ch"
+#include "protheus.ch"
+#include "totvs.framework.treports.integratedprovider.th"
+
+#DEFINE SX1GRUPO "RESTM01"
+
+using namespace totvs.framework.treports.integratedprovider						// Alias da Classe Construtora Integratedprovider
+namespace totvs.protheus.backoffice.est.listofcities.integratedprovider		// Alias do objeto de negócios
+
+@totvsFrameworkTReportsIntegratedProvider(active=.T., team="SIGAEST", tables="CC2",name="Cadastro de Municípios IBGE", country="ALL")
+
+//-------------------------------------------------------------------
+/*{Protheus.doc} listofcitiesSmartViewBusinessObject 
+Classe para criação do Objeto de Negócio de Prodotos 
+ 
+@author  Michel Sander
+@since   02/2024
+@version 1.0
+*/
+//-------------------------------------------------------------------  
+Class listofcitiesSmartViewBusinessObject From IntegratedProvider
+
+	Public Method new() as object
+	Public Method getData() as object
+	Public Method getSchema() as object
+
+	Protected data aFields as array
+	Protected data jItems  as json
+	Protected data cWhere  as character
+	Protected data lExistPergunte as Logical
+
+EndClass
+
+//-------------------------------------------------------------------
+/*{Protheus.doc} new
+Método de instância da classe
+ 
+@return object: self
+ 
+@author Michel Sander
+@since  02/2024
+@version 1.0
+*/
+//-------------------------------------------------------------------   
+Method new() Class listofcitiesSmartViewBusinessObject
+
+	_Super:new()
+
+	//Define a Área
+	self:appendArea( "Estoque/Custos" )
+
+	//Define o nome do Objeto de Negócio
+	self:setDisplayName( "Municipios IBGE" )
+
+	//Define a descrição do Objeto de Negócio
+	self:setDescription( "Tabela Dinâmica e Visão de Dados para listar os municípios brasileiros" )		
+
+	//Grupo de Perguntas
+	self:lExistPergunte := self:SetPergunte(SX1GRUPO)
+	If !self:lExistPergunte
+		cMsgSX1 := OemToAnsi("Grupo de perguntas RESTM01 nao encontrado. Verifique na tabela SX1, o grupo de perguntas informado")
+		self:setErrorStatus(400,"Sem Pergunte",cMsgSX1)
+		FwLogMsg("WARN",, "SmartView RESTM01",,,,cMsgSX1,,,)
+	EndIf
+
+	//Indica que o LookUp será do tipo padrão LookUp
+	self:setIsLookUp(.T.)
+	self:aFields := {}
+
+Return self
+
+//-------------------------------------------------------------------
+/*{Protheus.doc} getData
+Retorna os dados do objeto de negócio
+ 
+@param nPage, numérico, indica a página atual do relatório
+@param oFilter, objeto, contém o filtro do TReports
+ 
+@return object: self:oData
+ 
+@author Michel Sander
+@since 02/2024
+@version 1.0
+*/
+//-------------------------------------------------------------------   
+Method getData( nPage as Numeric, oFilter as object) as object Class listofcitiesSmartViewBusinessObject
+
+	Local cQuery	 as Character
+	Local nSkip		 as Numeric
+	Local nCount	 as Numeric
+	Local jParams	 as Json
+	Local nQTotal   as Numeric
+	Local nQTDEEST  as Numeric 
+	Local cRecCC2   as Character 
+	Local aEst      as Array
+
+	Private cAliasNew  as Character
+
+	If !self:lExistPergunte
+		Return self:oData
+	EndIf
+
+	// Tamanho da paginação de registros
+	//self:SetPageSize(100)
+
+	//metodo para retorno do json dos parâmetros
+   jParams   := oFilter:getParameters() 
+
+	//Montagem da query
+   cQuery := "SELECT * FROM "+RetSQLName("CC2")+" CC2 "
+   cQuery += "         WHERE CC2_FILIAL = '"+FWxFilial("CC2")+"' "
+   cQuery += "           AND CC2_EST    >= '"+AllTrim(jParams['MV_PAR01'][1])+"'"
+   cQuery += "           AND CC2_EST    <= '"+AllTrim(jParams['MV_PAR02'][1])+"'"
+   cQuery += "           AND CC2_CODMUN >= '"+AllTrim(jParams['MV_PAR03'][1])+"'"
+   cQuery += "           AND CC2_CODMUN <= '"+AllTrim(jParams['MV_PAR04'][1])+"'"
+   cQuery += "           AND CC2_MUN    >= '"+AllTrim(jParams['MV_PAR05'][1])+"'" 
+   cQuery += "           AND CC2_MUN    <= '"+AllTrim(jParams['MV_PAR06'][1])+"'"
+                  
+	//Os filtros serão setados na interface do novo TReports
+	cQuery += self:cWhere
+
+	If oFilter:hasFilter()
+		cQuery += " AND " + oFilter:getSQLExpression()
+	Endif
+
+	cQuery += " AND CC2.D_E_L_E_T_ = ' ' "
+
+	//Ordem de impressão dos Saldos
+	cQuery    += " ORDER BY CC2_EST, CC2_MUN"
+	cQuery    := ChangeQuery(cQuery)
+   cAliasNew := MPSysOpenQuery(cQuery)
+	aEst      := {}
+
+	If nPage == 1
+		(cAliasNew)->(dbGoTop())
+	Else
+		//Encontra a quantidade de itens que irá pular de acordo com a página atual
+		nSkip := ((nPage - 1) * self:getPageSize())
+		(cAliasNew)->(dbSkip(nSkip))
+	Endif
+
+	While (cAliasNew)->(!Eof())
+
+		nQTotal++
+
+      If (cAliasNew)->CC2_EST <> cRecCC2 
+         AADD(aEst, AllTrim((cAliasNew)->CC2_EST))
+         cRecCC2 := (cAliasNew)->CC2_EST
+         nQTDEEST := 1
+      Else 
+         nQTDEEST++
+      EndIf 
+
+		self:jItems := JsonObject():New()
+		self:jItems["CC2_EST"]    := (cAliasNew)->CC2_EST
+		self:jItems["CC2_CODMUN"] := (cAliasNew)->CC2_CODMUN
+		self:jItems["CC2_MUN"]    := (cAliasNew)->CC2_MUN
+		self:jItems["QTDTOTAL"]   := nQTotal
+		self:jItems["QTDEEST"]    := nQTDEEST
+		self:processData()
+		self:oData:appendData(self:jItems)
+		nCount++
+
+		(cAliasNew)->(dbSkip())
+		
+		//Sai do loop quando chegar no tamanho de itens da página
+		If nCount == self:GetPageSize()
+			Exit
+		Endif
+
+	EndDo
+
+	//Se não for o último registro indica que terá próxima página
+	self:SetHasNext(!(cAliasNew)->(Eof()))
+	(cAliasNew)->(DBCloseArea())
+
+Return self:oData
+
+//-------------------------------------------------------------------
+/*{Protheus.doc} getSchema
+Retorna a estrutura dos campos
+ 
+@return object: self:oSchema
+ 
+@author Michel Sander
+@since 02/2024
+@version 1.0
+*/
+//-------------------------------------------------------------------   
+Method getSchema() as object Class listofcitiesSmartViewBusinessObject
+
+	Local aFieldsCC2 as Array
+
+	aFieldsCC2 := {"CC2_EST", "CC2_CODMUN", "CC2_MUN"}
+
+	self:AliasToSchema("CC2",aFieldsCC2)
+
+	self:oSchema:addProperty("QTDTOTAL"     , "Total por Estado", "number", "Total por Estado", "QTDTOTAL")
+	self:oSchema:addProperty("QTDEEST"      , "Total Municipios", "number", "Total Municipios", "QTDEEST")
+
+Return self:oSchema
