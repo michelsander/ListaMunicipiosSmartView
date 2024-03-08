@@ -4,6 +4,10 @@
 Projeto para geração de artefatos de consulta e relatório do Totvs Smartview
 ![image](https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/a6b983ed-57f2-4f05-a401-a53c207d98b9)
 
+# 🥷 Author
+   > <strong>Michel Sander<strong/><br>Data de Desenvolvimento: 05/04/2024<br>
+
+# 
 ## Documentação Smartview 
    > https://tdn.totvs.com/display/public/framework/Smart+View+no+Protheus
    > https://tdn.totvs.com/pages/releaseview.action?pageId=625448935
