@@ -6,10 +6,11 @@
 
 # 🥷 Autores / Colaboradores
 
-   > <img width="25" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/580142a7-666c-4ea7-b56f-f8dcd68f161c"><strong> Michel Sander<strong/>
-   [Meu Linkedin](https://www.linkedin.com/in/michel-sander-11a711176)<br>
+   > <img width="25" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/580142a7-666c-4ea7-b56f-f8dcd68f161c"><strong> Michel Sander<strong/><br>
    > 📆Data do Projeto: 05 de Março de 2024<BR>
-   > 🏦Projeto entregue á Empresa [OpusVP](https://opusvp.com.br/)
+   > 🏦Projeto entregue á Empresa [OpusVP](https://opusvp.com.br/)<br>
+   <img width="50" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/3f43d811-bc27-4fb1-b2f0-bdb5785ac883">[ Meu Linkedin](https://www.linkedin.com/in/michel-sander-11a711176)<br>
+
 
 # Tecnologias utilizadas
 <img width="185" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/b7295cdc-2d45-40ee-bb43-ea05e2d9d705"><br>
@@ -41,7 +42,7 @@
    3. Posicionado no projeto acesse ```⚙️ Configurações``` ou ```CTRL +,```
    4. Clique em Extensões TOTVS
       > Procure a sessão ```Totvs Language Server``` e vá até o folder ```Extensions Allowed```
-   6. Abra o arquivo JSON de configurações dessa sessão acima, e adicione a extensão ```.TRP```<br> na tag ```totvsLanguageServer.folder.extensionsAllowed```
+   6. Abra o 💾arquivo JSON de configurações dessa sessão acima, e adicione a extensão ```.TRP```<br> na tag ```totvsLanguageServer.folder.extensionsAllowed```
 
    7. Acesse o módulo ```99- Configurador``` na opção ```Ambiente > Cadastros > Configuração Smartview``` e faça a autenticação do Token Protheus<br>na URL do Smartview configurado no ```item 3 de Pré-requisitos```
       
@@ -57,11 +58,11 @@
       <img width="254" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/89ddeccc-8841-463f-a382-4879b4001beb">
 
    > Retorne ao VSCODE
-   > No projeto ```ListaMunicipiosSmartView``` acessar a 📂pasta ```Objeto de Negócios``` e abrir o fonte da classe do objeto Smartview ```backoffice.sv.est.listofcities.lpp```<br>
+   > No projeto ```ListaMunicipiosSmartView``` acessar a 📂pasta ```Objeto de Negócios``` e abrir o 💾fonte da classe do objeto Smartview ```backoffice.sv.est.listofcities.lpp```<br>
    > Compilar o fonte no RPO 
 
-   > Acessar a 📂pasta ```Objeto de Negócios``` e abrir o fonte de menu ```RESTM01.prw```
-   > Compilar o fonte no RPO
+   > Acessar a 📂pasta ```Objeto de Negócios``` e abrir o 💾fonte de menu ```RESTM01.prw```
+   > Compilar o 💾fonte no RPO
 
    2. ```Atualize o RPO do ambiente REST ou realize a compilação dos fontes acima diretamente no ambiente REST```
 
@@ -71,7 +72,7 @@
       <img width="144" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/1daae1f8-cd79-4615-aa0f-69a3b2e5d069"><br>
 
 
-   2. Acesse as sub-pastas abaixo para compilar os artefatos do Smartview<BR>
+   2. Acesse as sub-pastas abaixo para compilar os 💾artefatos do Smartview<BR>
 
       <img width="204" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/e781171b-10e4-4741-a7fd-d9ba65fc5c2d"><br>
       
