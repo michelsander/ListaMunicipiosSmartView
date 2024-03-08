@@ -1,7 +1,7 @@
 <img width="63" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/bc8494cd-ce9d-43cf-b302-8d916fc13900">
 
 # ListaMunicipiosSmartView
-Projeto para geração de artefatos de consulta e relatório do Totvs Smartview
+   ### Projeto para geração de artefatos de consulta e relatório do Totvs Smartview<br>
 ![image](https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/a6b983ed-57f2-4f05-a401-a53c207d98b9)
 
 # 🥷 Author
@@ -10,14 +10,16 @@ Projeto para geração de artefatos de consulta e relatório do Totvs Smartview
 # Tecnologias utilizadas
 <img width="185" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/b7295cdc-2d45-40ee-bb43-ea05e2d9d705">
 
-Totvs PO-UI
+[Totvs ADVPL-TLPP Language](https://www.totvs.com/blog/developers/advpl/)<br>
+[Totvs PO-UI](https://po-ui.io/)
 
-## Documentação Smartview 
+
+## Documentação do Totvs Smartview 
    > https://tdn.totvs.com/display/public/framework/Smart+View+no+Protheus
    > https://tdn.totvs.com/pages/releaseview.action?pageId=625448935<br>
 
 
-## Instalador Smartview
+## Instalador do Totvs Smartview
    > https://tdn.totvs.com.br/pages/releaseview.action?pageId=626636542<br>
 
 ## Pré-requisitos 
@@ -45,4 +47,13 @@ Totvs PO-UI
 
       <img width="375" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/c8551b61-b646-4d66-bf69-d38337b43555">
 
+## 💻 Objeto de Negócios
 
+   1. Conectar no seu ambiente Protheus criado<br>
+      <img width="254" alt="image" src="https://github.com/michelsander/ListaMunicipiosSmartView/assets/104599995/89ddeccc-8841-463f-a382-4879b4001beb">
+
+   > No projeto ```ListaMunicipios``` acessar a pasta ```Objeto de Negócios``` e abrir o fonte da classe do objeto Smartview ```backoffice.sv.est.listofcities.lpp```<br>
+   > Compilar o fonte no RPO 
+
+   > Acessar a pasta ```Objeto de Negócios``` e abrir o fonte de menu ```RESTM01.prw```
+   > Compilar o fonte no RPO
